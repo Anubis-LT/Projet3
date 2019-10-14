@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Start",
+    "position_x": 1,
+    "position_y": 1,
+    "file_picture": "a def"
+  },
+  {
+    "name": "Wall",
+    "position_x": 3,
+    "position_y": 7,
+    "file_picture": "a def"
+  },
+  {
+    "name": "Wall",
+    "position_x": 4,
+    "position_y": 7,
+    "file_picture": "a def"
+  },{
+    "name": "Wall",
+    "position_x": 5,
+    "position_y": 7,
+    "file_picture": "a def"
+  },{
+    "name": "Wall",
+    "position_x": 6,
+    "position_y": 7,
+    "file_picture": "a def"
+  },
+  {
+    "name": "Exit",
+    "position_x": 224,
+    "position_y": 7,
+    "file_picture": "a def"
+  }
+]
