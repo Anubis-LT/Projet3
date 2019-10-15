@@ -4,6 +4,31 @@
     "position_x": 1,
     "position_y": 1,
     "file_picture": "a def"
+  },{
+    "name": "McGyver",
+    "position_x": 1,
+    "position_y": 1,
+    "file_picture": "a def"
+  },{
+    "name": "Gardien",
+    "position_x": 2,
+    "position_y": 2,
+    "file_picture": "a def"
+  },{
+    "name": "Aiguille",
+    "position_x": 3,
+    "position_y": 3,
+    "file_picture": "a def"
+  },{
+    "name": "Tube",
+    "position_x": 4,
+    "position_y": 4,
+    "file_picture": "a def"
+  },{
+    "name": "Ether",
+    "position_x": 5,
+    "position_y": 5,
+    "file_picture": "a def"
   },
   {
     "name": "Wall",
