@@ -31,9 +31,9 @@ class Map:
 
     def add_objectgame(self, objectgame):
         self.objectgame.append(objectgame)
-
+        print(objectgame)
     @classmethod
-    def initialize_maps(cls):
+    def _initialize_maps(cls):
         for position_y in range(cls.MIN_LATITUDE_DEGREES, cls.MAX_LATITUDE_DEGREES, cls.HEIGHT_DEGREES):
             for position_x in range(cls.MIN_LONGITUDE_DEGREES, cls.MAX_LONGITUDE_DEGREES, cls.WIDTH_DEGREES):
                 bottom_left_corner = Position(position_x, position_y)
@@ -50,6 +50,10 @@ class Map:
 
     @classmethod
     def find_zone_that_contains(cls, position):
+        if not cls.MAPS:
+            # Initialize zones automatically if necessary
+            cls._initialize_maps()
+
         # Compute the index in the ZONES array that contains the given position
         positionx_index = int((position.position_x - cls.MIN_LONGITUDE_DEGREES) / cls.WIDTH_DEGREES)
         positiony_index = int((position.position_y - cls.MIN_LATITUDE_DEGREES) / cls.HEIGHT_DEGREES)
@@ -59,10 +63,9 @@ class Map:
         # Just checking that the index is correct
         map = cls.MAPS[map_index]
         #assert map.contains(position)
+        print(cls.MAPS[map_index])
 
         return map
-
-
 
 def main():
     # récupération des données d un fichier json pour la structure du  Depart Murs et arrivée
@@ -74,7 +77,6 @@ def main():
 
         structures = Structure(position, **structures_attributes)
 
-        Map.initialize_maps()
         map = Map.find_zone_that_contains(position)
         map.add_objectgame(structures)
 

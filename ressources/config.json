@@ -1,0 +1,41 @@
+{
+  "constants": {
+    "filemap": "map.txt",
+    "nb_sprites": 15,
+    "size_sprites": 1
+  },
+  "characters": {
+    "mac_gyver": {
+      "caractere": "M",
+      "file_picture": "ressources/pictures/mac_gyver.png"
+    },
+    "guardian": {
+      "caractere": "G",
+      "file_picture": "ressources/pictures/guardian.png"
+    }
+  },
+  "object": {
+    "needle": {
+      "caractere": "N",
+      "file_picture": "ressources/pictures/needle.png"
+    },
+    "tube": {
+      "caractere": "T",
+      "file_picture": "ressources/pictures/tube.png"
+    },
+    "ether": {
+      "caractere": "E",
+      "file_picture": "ressources/pictures/ether.png"
+    }
+  },
+  "structures": {
+    "wall": {
+      "caractere": "W",
+      "file_picture": "ressources/pictures/brick.png"
+    },
+    "floor": {
+      "caractere": "F",
+      "file_picture": "ressources/pictures/floor.png"
+    }
+  }
+}
