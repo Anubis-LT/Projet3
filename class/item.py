@@ -6,7 +6,6 @@ Class: class_item.py
 Item and Inventory
 
 """
-from class_config_json import Config_Json
 
 
 # ===========================

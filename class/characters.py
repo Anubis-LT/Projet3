@@ -7,9 +7,9 @@ Class: class_characters.py
 
 """
 
-from class_item import Inventory
+from item import Inventory
 from random import randint
-from class_config_json import Config_Json
+from config_json import Config_Json
 
 # ============================
 #  Base class of all personas

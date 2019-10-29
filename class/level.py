@@ -8,8 +8,7 @@ Class: class_level.py
 """
 import os
 from random import randint
-import sys
-from class_item import Item
+from item import Item
 
 # ===========================
 #         Level class
