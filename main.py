@@ -22,11 +22,11 @@ map.txt
 # from class_level import *
 import sys
 sys.path.append("./class")
-from class_config_json import Config_Json
-from class_level import Level
-from class_characters import Character
-from class_characters import NPC
-from class_images import Images
+from configjson import Config_Json
+from level import Level
+from characters import Character
+from characters import NPC
+from images import Images
 
 # ===========================
 #    Initialize the game
@@ -55,6 +55,7 @@ def launch_game():
     mcgyver = Character(mcgyver_maze)
     guardian = NPC(mcgyver_maze, guardians["guardian"])
     images = Images(parameters,object)
+
 
 
 if __name__ == "__main__":
