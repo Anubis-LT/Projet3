@@ -22,11 +22,12 @@ map.txt
 # from class_level import *
 import sys
 sys.path.append("./class")
-from configjson import Config_Json
+
 from level import Level
 from characters import Character
 from characters import NPC
 from images import Images
+from configjson import Config_Json
 
 # ===========================
 #    Initialize the game

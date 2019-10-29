@@ -6,7 +6,7 @@ Class: class_images.py
 
 
 """
-from config_json import Config_Json
+from configjson import Config_Json
 
 class Images:
     """
