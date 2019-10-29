@@ -25,7 +25,7 @@ sys.path.append("./class")
 
 from level import Level
 from characters import Character
-from characters import NPC
+from characters import Npc
 from images import Images
 from configjson import Config_Json
 
@@ -54,7 +54,7 @@ def launch_game():
 
     # creating character, NPC and images instances
     mcgyver = Character(mcgyver_maze)
-    guardian = NPC(mcgyver_maze, guardians["guardian"])
+    guardian = Npc(mcgyver_maze, guardians["guardian"])
     images = Images(parameters,object)
 
 

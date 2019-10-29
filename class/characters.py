@@ -39,7 +39,7 @@ class GamePersona():
 # ===========================
 #         NPCS' class
 # ===========================
-class NPC(GamePersona):
+class Npc(GamePersona):
     """
     Class to create NPCS.
     """
