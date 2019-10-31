@@ -6,7 +6,7 @@ Class: class_images.py
 
 
 """
-from configjson import Config_Json
+from configjson import ConfigJson
 
 class Images:
     """
@@ -17,7 +17,7 @@ class Images:
         """
             Load images Wall and Floor from stucture config.json
         """
-        structure = Config_Json.filemap(parameters,"structures")
+        structure = ConfigJson.file_map(parameters, "structures")
         self.wall = structure["wall"]
         self.wall_img = self.wall["file_picture"]
 
@@ -27,7 +27,7 @@ class Images:
         """
            Load images Mac Gyver and Guardian from characters config.json
         """
-        characters = Config_Json.filemap(parameters,"characters")
+        characters = ConfigJson.file_map(parameters, "characters")
         self.mcgyver = characters["mac_gyver"]
         self.mcgyver_img = self.load_image(self.mcgyver["file_picture"])
 
@@ -37,7 +37,7 @@ class Images:
         """
            Load images Needle,tube,ether from object config.json
         """
-        objects = Config_Json.filemap(parameters, "object")
+        objects = ConfigJson.file_map(parameters, "object")
         self.needle = objects["needle"]
         self.needle_img = self.load_image(self.needle["file_picture"])
 

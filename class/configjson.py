@@ -12,16 +12,15 @@ Class: class_config_json.py
 
 import json
 
-class Config_Json:
+
+class ConfigJson:
     """
     This is to load items of file json
     """
 
-    def __init__(self,file):
+    def __init__(self, file):
         with open(file, "r") as config_json:
-            Config_Json.parametresConfig = json.load(config_json)
+            self.parametersConfig = json.load(config_json)
 
-
-    def filemap(self,name):
-        return((self.parametresConfig[name]))
-
+    def file_map(self, name):
+        return self.parametersConfig[name]

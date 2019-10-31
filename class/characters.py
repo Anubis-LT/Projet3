@@ -7,9 +7,10 @@ Class: class_characters.py
 
 """
 
-from item import Inventory
 from random import randint
-from configjson import Config_Json
+from configjson import ConfigJson
+from item   import Inventory
+
 
 # ============================
 #  Base class of all personas
@@ -22,18 +23,26 @@ class GamePersona():
     def __init__(self):
         self.pos_x = 0
         self.pos_y = 0
-        parameters = Config_Json('./ressources/config.json')
-        config_file=Config_Json.filemap(parameters, "constants")
-        size_sprite = config_file.get("size_sprites")
 
-        self.case_x = self.pos_x * size_sprite
-        self.case_y = self.pos_y * size_sprite
+        parameters = ConfigJson('./ressources/config.json')
+        config_file = ConfigJson.file_map(parameters, "constants")
 
-    def case_position(self, lvl):
-        """
-        Returns the position of the persona
-        """
-        return (self.case_x, self.case_y)
+        self.size_sprite = config_file.get("size_sprites")
+        self.nb_sprite = config_file.get("nb_sprites")
+
+        structure = ConfigJson.file_map(parameters, "structures")
+        wall = structure["wall"]
+        self.wall_letter = wall["caractere"]
+
+        floor = structure["floor"]
+        self.floor_letter = floor["caractere"]
+
+        characters = ConfigJson.file_map(parameters, "characters")
+        mcgyver = characters["mac_gyver"]
+        self.mcgyver_letter = mcgyver["caractere"]
+
+        self.case_x = self.pos_x * self.size_sprite
+        self.case_y = self.pos_y * self.size_sprite
 
 
 # ===========================
@@ -46,36 +55,33 @@ class Npc(GamePersona):
 
     def __init__(self, lvl, name):
         self.name = name
+        if name["caractere"] != "M":
+            super().__init__()
+            self.pos_x, self.pos_y = self.random_npc_position(lvl, name)
 
-        super().__init__()
-        self.pos_x, self.pos_y = self.random_npc_position(lvl,name)
+    def random_npc_position(self, lvl, name):
 
-    def random_npc_position(self, lvl,name):
-        parameters = Config_Json('./ressources/config.json')
-        config_file = Config_Json.filemap(parameters, "constants")
+        parameters = ConfigJson('./ressources/config.json')
+        config_file = ConfigJson.file_map(parameters, "constants")
         size_sprite = config_file.get("size_sprites")
         nb_sprite = config_file.get("nb_sprites")
-
-        # load
-        structure = Config_Json.filemap(parameters, "structures")
-        floor = structure["floor"]
-        floor_caractere = floor["caractere"]
 
         """
         Returns a random position for each instance of NPC
         """
-        while lvl.maze_map[self.pos_y][self.pos_x] != floor_caractere:
-            self.pos_x = randint(10, (nb_sprite - 1))
-            self.pos_y = randint(10, (nb_sprite - 1))
-        self.case_x = self.pos_x * size_sprite
-        self.case_y = self.pos_y * size_sprite
+        while lvl.structure[self.pos_y][self.pos_x] != self.floor_letter :
+            self.pos_x = randint(10, (int(nb_sprite) - 1))
+            self.pos_y = randint(10, (int(nb_sprite) - 1))
+
+        self.case_x = self.pos_x * int(size_sprite)
+        self.case_y = self.pos_y * int(size_sprite)
 
         # set the case name as NPCS' initial
-        lvl.maze_map[self.pos_y][self.pos_x] = name["caractere"]
+        lvl.structure[self.pos_y][self.pos_x] = name["caractere"]
         return self.case_x, self.case_y
 
 
-# ===========================
+## ===========================
 #     Characters' class
 # ===========================
 class Character(GamePersona):
@@ -85,5 +91,91 @@ class Character(GamePersona):
 
     def __init__(self, lvl):
         self.lvl = lvl
-        self.inventory = Inventory()
         super().__init__()
+        self.case_x = 0
+        self.case_y = 0
+        self.x = 0
+        self.y = 0
+        self.inventory = Inventory()
+
+    def move(self, direction):
+        """
+        Defines the movement of the hero.
+        Gets the direction specified in type(str),
+        and gets the hero on the case if it's not a wall.
+        """
+        if direction == "right":
+            # to not get out of the screen
+            # NB_SPRITES - 1:
+            # because there are 15 sprites,
+            # but we start counting from 0
+            # so it's 0 to 14 (15 sprites)
+            if self.pos_x < (self.nb_sprite - 1):
+                # check if the case is not a wall
+               if self.lvl.structure[self.pos_y][self.pos_x + 1] \
+                        not in self.wall_letter:
+                    # if it is not, go by one case
+                    self.pos_x += 1
+                    # move the hero sprite on the case
+                    self.case_x = self.pos_x * self.size_sprite
+                    if self.lvl.structure[self.pos_y][self.pos_x] == "O":
+                        self.collect_item()
+
+                    self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
+                    self.lvl.structure[self.pos_y][self.pos_x-1] = self.floor_letter
+
+        if direction == "left":
+            if self.pos_x > 0:
+                if self.lvl.structure[self.pos_y][self.pos_x - 1] \
+                        not in self.wall_letter:
+                    self.pos_x -= 1
+                    self.case_x = self.pos_x * self.size_sprite
+                    if self.lvl.structure[self.pos_y][self.pos_x]=="O":
+                        self.collect_item()
+
+                    self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
+                    self.lvl.structure[self.pos_y][self.pos_x + 1] = self.floor_letter
+
+        if direction == "up":
+            if self.pos_y > 0:
+                if self.lvl.structure[self.pos_y - 1][self.pos_x] \
+                        not in self.wall_letter:
+                    self.pos_y -= 1
+                    self.case_y = self.pos_y * self.size_sprite
+                    if self.lvl.structure[self.pos_y][self.pos_x] == "O":
+                        self.collect_item()
+                    self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
+                    self.lvl.structure[self.pos_y+1][self.pos_x] = self.floor_letter
+
+        if direction == "down":
+            if self.pos_y < (self.nb_sprite - 1):
+                if self.lvl.structure[self.pos_y + 1][self.pos_x] \
+                        not in self.wall_letter:
+                    self.pos_y += 1
+                    self.case_y = self.pos_y * self.size_sprite
+
+                    if self.lvl.structure[self.pos_y][self.pos_x] == "O":
+                        self.collect_item()
+
+                    self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
+                    self.lvl.structure[self.pos_y-1][self.pos_x] = self.floor_letter
+
+    def collect_item(self):
+        """
+        Collects the items from the map.
+        Collectable items are set in the ITEMS_SPRITES constant
+        """
+        item =self.lvl.structure[self.pos_y-1][self.pos_x]
+        self.inventory.add_object(item)
+
+        nb=0
+        inventory = Inventory()
+        for item2 in inventory:
+            nb += 1
+
+        if nb == 1:
+            print(nb, "/ 3 object collected")
+        else:
+            print(nb, "/ 3 objects collected")
+
+

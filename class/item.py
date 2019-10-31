@@ -17,8 +17,6 @@ class Item:
     def __init__(self, position):
         self.pos_x, self.pos_y = position
 
-        # turn to false when char position == item position
-        self.displaying = True
 
     @property
     def case_position(self):
