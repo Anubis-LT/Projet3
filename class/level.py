@@ -9,7 +9,6 @@ import  os
 from    random  import randint
 from    item    import Item
 
-
 # ===========================
 #         Level class
 # ===========================
@@ -79,3 +78,4 @@ class Level:
             if self.structure[pos_y][pos_x] == "F":
                 self.structure[pos_y][pos_x] = "O"
                 return pos_x, pos_y
+

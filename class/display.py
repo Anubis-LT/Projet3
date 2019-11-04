@@ -7,6 +7,16 @@ Class: class_images.py
 
 """
 from configjson import ConfigJson
+from characters import Character
+
+
+"""
+    Load display screen
+"""
+def screen(strucmaze):
+    for item in strucmaze:
+        s = ""
+        print(s.join(item))
 
 class Images:
     """

@@ -81,7 +81,7 @@ class Npc(GamePersona):
         return self.case_x, self.case_y
 
 
-## ===========================
+# ===========================
 #     Characters' class
 # ===========================
 class Character(GamePersona):
