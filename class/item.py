@@ -17,7 +17,6 @@ class Item:
     def __init__(self, position):
         self.pos_x, self.pos_y = position
 
-
     @property
     def case_position(self):
         """
@@ -44,12 +43,19 @@ class Inventory:
     """
 
     def __init__(self):
-        self._items = []
-
-    def __iter__(self):
-        for item in self._items:
-            yield item
+        self.items = []
+        self.nbItems = 0
 
     def add_object(self, item):
         # adds an item to the _items list
-        self._items.append(item)
+        self.items.append(item)
+        nb_items = Inventory.nb_object(self)
+        print("Numbers Items Collected : ", nb_items)
+
+    def nb_object(self):
+        # Number Items collected
+        nb_items = 0
+        for item in self.items:
+            nb_items += 1
+
+        return nb_items

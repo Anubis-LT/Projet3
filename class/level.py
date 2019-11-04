@@ -72,7 +72,10 @@ class Level:
         pos_y = 0
 
         while self.structure[pos_y][pos_x] != "":
+
             pos_x = randint(1, (int(nbsprites) - 1))
             pos_y = randint(1, (int(nbsprites) - 1))
-            self.structure[pos_y][pos_x] = "O"
-            return pos_x, pos_y
+
+            if self.structure[pos_y][pos_x] == "F":
+                self.structure[pos_y][pos_x] = "O"
+                return pos_x, pos_y

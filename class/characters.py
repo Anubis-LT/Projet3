@@ -9,7 +9,7 @@ Class: class_characters.py
 
 from random import randint
 from configjson import ConfigJson
-from item   import Inventory
+from item import Inventory
 
 
 # ============================
@@ -69,7 +69,7 @@ class Npc(GamePersona):
         """
         Returns a random position for each instance of NPC
         """
-        while lvl.structure[self.pos_y][self.pos_x] != self.floor_letter :
+        while lvl.structure[self.pos_y][self.pos_x] != self.floor_letter:
             self.pos_x = randint(10, (int(nb_sprite) - 1))
             self.pos_y = randint(10, (int(nb_sprite) - 1))
 
@@ -96,7 +96,9 @@ class Character(GamePersona):
         self.case_y = 0
         self.x = 0
         self.y = 0
+        self.nbObjectInventory = 0
         self.inventory = Inventory()
+        self.continue_game = True
 
     def move(self, direction):
         """
@@ -112,17 +114,17 @@ class Character(GamePersona):
             # so it's 0 to 14 (15 sprites)
             if self.pos_x < (self.nb_sprite - 1):
                 # check if the case is not a wall
-               if self.lvl.structure[self.pos_y][self.pos_x + 1] \
+                if self.lvl.structure[self.pos_y][self.pos_x + 1] \
                         not in self.wall_letter:
                     # if it is not, go by one case
                     self.pos_x += 1
                     # move the hero sprite on the case
                     self.case_x = self.pos_x * self.size_sprite
-                    if self.lvl.structure[self.pos_y][self.pos_x] == "O":
-                        self.collect_item()
+
+                    Character.control_game(self)
 
                     self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
-                    self.lvl.structure[self.pos_y][self.pos_x-1] = self.floor_letter
+                    self.lvl.structure[self.pos_y][self.pos_x - 1] = self.floor_letter
 
         if direction == "left":
             if self.pos_x > 0:
@@ -130,8 +132,8 @@ class Character(GamePersona):
                         not in self.wall_letter:
                     self.pos_x -= 1
                     self.case_x = self.pos_x * self.size_sprite
-                    if self.lvl.structure[self.pos_y][self.pos_x]=="O":
-                        self.collect_item()
+
+                    Character.control_game(self)
 
                     self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
                     self.lvl.structure[self.pos_y][self.pos_x + 1] = self.floor_letter
@@ -142,10 +144,11 @@ class Character(GamePersona):
                         not in self.wall_letter:
                     self.pos_y -= 1
                     self.case_y = self.pos_y * self.size_sprite
-                    if self.lvl.structure[self.pos_y][self.pos_x] == "O":
-                        self.collect_item()
+
+                    Character.control_game(self)
+
                     self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
-                    self.lvl.structure[self.pos_y+1][self.pos_x] = self.floor_letter
+                    self.lvl.structure[self.pos_y + 1][self.pos_x] = self.floor_letter
 
         if direction == "down":
             if self.pos_y < (self.nb_sprite - 1):
@@ -154,28 +157,28 @@ class Character(GamePersona):
                     self.pos_y += 1
                     self.case_y = self.pos_y * self.size_sprite
 
-                    if self.lvl.structure[self.pos_y][self.pos_x] == "O":
-                        self.collect_item()
+                    Character.control_game(self)
 
                     self.lvl.structure[self.pos_y][self.pos_x] = self.mcgyver_letter
-                    self.lvl.structure[self.pos_y-1][self.pos_x] = self.floor_letter
+                    self.lvl.structure[self.pos_y - 1][self.pos_x] = self.floor_letter
 
-    def collect_item(self):
-        """
-        Collects the items from the map.
-        Collectable items are set in the ITEMS_SPRITES constant
-        """
-        item =self.lvl.structure[self.pos_y-1][self.pos_x]
-        self.inventory.add_object(item)
+    def control_game(self):
 
-        nb=0
-        inventory = Inventory()
-        for item2 in inventory:
-            nb += 1
-
-        if nb == 1:
-            print(nb, "/ 3 object collected")
+        if self.lvl.structure[self.pos_y][self.pos_x] == "O":
+            self.inventory.add_object(self.lvl.structure[self.pos_y][self.pos_x])
         else:
-            print(nb, "/ 3 objects collected")
+            if self.lvl.structure[self.pos_y][self.pos_x] == "G":
+                print("")
+                print("")
+                if self.inventory.nb_object() == 3:
+                    print("***************************")
+                    print("**     You are Winner    **")
+                    print("***************************")
 
+                else:
+                    print("-------  You Lost ! -------")
 
+                print("")
+                print("")
+
+                self.continue_game = False

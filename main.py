@@ -49,16 +49,12 @@ def launch_game():
     # Instantiations 'mac_gyver_maze' from 'file_map' and 'name_object' for ramdom
     mac_gyver_maze = Level(file_map, name_object)
 
-
-
     """
     Instantiations character, Npc from config.json
     """
-    character   = ConfigJson.file_map(parameters, "characters")
-    guardian    = Npc(mac_gyver_maze, character["guardian"])
-    mcgyver     = Character(mac_gyver_maze)
-
-
+    character = ConfigJson.file_map(parameters, "characters")
+    guardian = Npc(mac_gyver_maze, character["guardian"])
+    mcgyver = Character(mac_gyver_maze)
 
     # display
 
@@ -66,33 +62,47 @@ def launch_game():
         s = ""
         print(s.join(item))
 
-    game=True
+    game = True
     while game:
 
         touch_user = input("Move Mac Gyver (U'UP' D'Down' L'left' R'Right' Q'Quit')  ?")
-        stouch ="UDLRQ"
+        touch_user = touch_user.upper()
+        stouch = "UDLRQ"
 
         if touch_user in stouch:
-           if touch_user=="R":
-               mcgyver.move("right");game=True
-           if touch_user=="L":
-               mcgyver.move("left");game=True
-           if touch_user=="U":
-               mcgyver.move("up");game=True
-           if touch_user=="D":
-               mcgyver.move("down");game=True
-           if touch_user == "Q":
-               game = False
+            if touch_user == "R":
+                mcgyver.move("right");
+                game = True
+            if touch_user == "L":
+                mcgyver.move("left");
+                game = True
+            if touch_user == "U":
+                mcgyver.move("up");
+                game = True
+            if touch_user == "D":
+                mcgyver.move("down");
+                game = True
+            if touch_user == "Q":
+                response = input("Do you want to leave the game ? [Y/N] : ")
+                response = response.upper()
+                if response == "Y":
+                    game = False
 
+        if game:
 
-        if game == True:
-            # display
-            for item in mcgyver.lvl.structure:
-                s = ""
-                print(s.join(item))
+            """ Until Mac Gyver did not retrieve the 3 objects"""
+            if mcgyver.continue_game:
+                for item in mcgyver.lvl.structure:
+                    s = ""
+                    print(s.join(item))
+            else:
+                response = input("Do you want to play again ? [Y/N] : ")
+                response = response.upper()
+                if response == "Y":
+                    launch_game()
 
-
-
+    # End of game
+    print("Good Bye, see you soon")
 
 
 if __name__ == "__main__":
