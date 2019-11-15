@@ -2,7 +2,7 @@
 Game: McGyver maze
 Creator: Grégory Le Terte
 
-Class: class_images.py
+Class: display.py
 
 
 """
