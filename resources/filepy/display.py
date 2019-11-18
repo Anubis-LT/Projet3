@@ -14,8 +14,7 @@ from resources.filepy.constants import *
 
 
 class Display:
-    """Class only used for displaying the game, by loading images and blitting them on the screen"""
-
+    # Class only used for displaying the game, by loading images and blitting them on the screen
     def __init__(self):
 
         self.wall       = pg.image.load(WALL_IMG).convert_alpha()
@@ -27,7 +26,7 @@ class Display:
         self.needle     = pg.image.load(NEEDLE_IMG).convert_alpha()
 
     def display_map(self, structure_map, screen):
-        """Method to analyze the map characters and blit an image on every one of them"""
+        # Method to analyze the map characters and blit an image on every one of them
         line_number = 0
         for line in structure_map.map_array:
             col_number = 0

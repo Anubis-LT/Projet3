@@ -6,7 +6,12 @@
     "size_sprites"        : 40,
     "logo"                : "resources/pictures/LogoMaze.png",
     "icon"                : "resources/pictures/Gregory.ico",
-    "background_game"     : "resources/pictures/backgroung_game.jpg"
+    "sound_mcgyver"       : "MacGyver.mp3",
+    "sound_level1"        : "Level_1.mp3",
+    "sound_level2"        : "Level_2.mp3",
+    "sound_level3"        : "Level_3.mp3",
+    "sound_level4"        : "Level_4.mp3",
+    "sound_level5"        : "Level_5.mp3"
   },
   "characters": {
     "mac_gyver": {

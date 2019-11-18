@@ -4,7 +4,7 @@
 Game: McGyver maze
 Creator: Grégory Le Terte
 
-Class: class_characters.py
+Class: characters.py
 
 """
 
@@ -14,18 +14,18 @@ import sys
 sys.path.append("./")
 from resources.filepy.constants import *
 
-
 class Macgyver:
     """Class to manage the Macgyver moves and the items picking into the maze"""
     def __init__(self, structure_map):
-        """Start position and items counter"""
+
+        #Start position and items counter
         self.structure_map      = structure_map
         self.x                  = structure_map.start_x
         self.y                  = structure_map.start_y
         self.items_collected    = 0
 
     def move_up(self, structure_map):
-        """Check if the hero can move up and if he's on an item square"""
+        # Check if the hero can move up and if he's on an item square
         if structure_map.map_array[self.y - 1][self.x] != WALL_LETTER:
             structure_map.map_array[self.y][self.x] = FLOOR_LETTER
             self.y -= 1
@@ -34,7 +34,7 @@ class Macgyver:
         return structure_map
 
     def move_down(self, structure_map):
-        """Check if the hero can move down and if he's on an item square"""
+        # Check if the hero can move down and if he's on an item square
         if structure_map.map_array[self.y + 1][self.x] != WALL_LETTER:
             structure_map.map_array[self.y][self.x] = FLOOR_LETTER
             self.y += 1
@@ -43,7 +43,7 @@ class Macgyver:
         return structure_map
 
     def move_right(self, structure_map):
-        """Check if the hero can move right and if he's on an item square"""
+        # Check if the hero can move right and if he's on an item square
         if structure_map.map_array[self.y][self.x + 1] != WALL_LETTER:
             structure_map.map_array[self.y][self.x] = FLOOR_LETTER
             self.x += 1
@@ -52,7 +52,7 @@ class Macgyver:
         return map
 
     def move_left(self, structure_map):
-        """Check if the hero can move left and if he's on an item square"""
+        # Check if the hero can move left and if he's on an item square
         if structure_map.map_array[self.y][self.x - 1] != WALL_LETTER:
             structure_map.map_array[self.y][self.x] = FLOOR_LETTER
             self.x -= 1
@@ -61,8 +61,8 @@ class Macgyver:
         return structure_map
 
     def collect_items(self, structure_map):
-        '''Check if the hero position is also an item position, and increments the backpack
-        The item position is moved away to avoid repetitions'''
+        # Check if the hero position is also an item position, and increments the backpack
+        # The item position is moved away to avoid repetitions
         if (self.y, self.x) == structure_map.items[0]:
             self.items_collected += 1
             structure_map.items[0] = (14, 0)
@@ -74,7 +74,7 @@ class Macgyver:
             structure_map.items[2] = (14, 2)
 
 class Structure_map:
-    """Class which reads the map file, extract all the characters and places items randomly"""
+     # Class which reads the map file, extract all the characters and places items randomly
 
     def __init__(self, filename):
         """Lists of the entire map, the start coordonates
@@ -90,7 +90,7 @@ class Structure_map:
         self.extract_positions()
 
     def load_from_file(self):
-        """Loading map to make an array with all the file characters"""
+        # Loading map to make an array with all the file characters
         try:
             with open(self.filename, "r") as map_file:
                 for line in map_file:

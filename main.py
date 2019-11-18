@@ -20,15 +20,17 @@ from game import Game
 def main():
     # Lauch the program, by calling the start method of the Game in folder resources/filepy
     # Instancie game
-    load_game = True
+    load_game       = True
+    number_level    = 0
 
     while load_game:
 
-        game = Game()
+        game = Game(number_level)
 
         # start the game
         game.start()
 
+        number_level = game.levelnumber
 
 if __name__ == "__main__":
     main()

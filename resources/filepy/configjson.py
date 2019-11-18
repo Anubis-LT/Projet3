@@ -6,18 +6,10 @@ Class: class_config_json.py
 
 """
 
-# ===========================
-#         Config json filepy
-# ===========================
-
 import json
 
-
 class ConfigJson:
-    """
-    This is to load items of file json
-    """
-
+    # This is to load items of file json
     def __init__(self, file):
         with open(file, "r") as config_json:
             self.parametersConfig = json.load(config_json)

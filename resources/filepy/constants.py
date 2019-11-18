@@ -24,6 +24,13 @@ LOGO            = constants.get("logo")
 ICON            = constants.get("icon")
 BACKGROUND_GAME = constants.get("background_game")
 
+SOUND_MCGYVER   = constants.get("sound_mcgyver")
+SOUND_LEVEL1    = constants.get("sound_level1")
+SOUND_LEVEL2    = constants.get("sound_level2")
+SOUND_LEVEL3    = constants.get("sound_level3")
+SOUND_LEVEL4    = constants.get("sound_level4")
+SOUND_LEVEL5    = constants.get("sound_level5")
+
 wall            = structure["wall"]
 floor           = structure["floor"]
 mcgyver         = characters["mac_gyver"]
@@ -49,6 +56,8 @@ GUARDIAN_IMG    = guardian["file_picture"]
 NEEDLE_IMG      = needle["file_picture"]
 TUBE_IMG        = tube["file_picture"]
 ETHER_IMG       = ether["file_picture"]
+
+
 
 
 
