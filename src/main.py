@@ -13,7 +13,6 @@ main.py
 
 import sys
 
-sys.path.append("./resources/filepy")
 from game import Game
 
 

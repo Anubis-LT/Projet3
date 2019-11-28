@@ -12,7 +12,7 @@ from random import sample
 import sys
 
 sys.path.append("./")
-from resources.filepy.constants import *
+from src.constants import *
 
 class Macgyver:
     """Class to manage the Macgyver moves and the items picking into the maze"""

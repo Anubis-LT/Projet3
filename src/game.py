@@ -8,10 +8,10 @@ import os
 import time
 
 sys.path.append("./")
-from resources.filepy.constants     import *
-from resources.filepy.level         import Level
-from resources.filepy.characters    import Macgyver, Structure_map
-from resources.filepy.display       import Display
+from src.constants import *
+from src.level import Level
+from src.characters import Macgyver, Structure_map
+from src.display import Display
 
 
 class Game:

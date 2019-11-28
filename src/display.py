@@ -10,7 +10,7 @@ import pygame as pg
 import sys
 
 sys.path.append("./")
-from resources.filepy.constants import *
+from src.constants import *
 
 
 class Display:

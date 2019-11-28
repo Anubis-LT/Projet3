@@ -10,7 +10,7 @@ import os
 import sys
 
 sys.path.append("./")
-from resources.filepy.constants import *
+from src.constants import *
 
 class Level:
     def __init__(self,level):
