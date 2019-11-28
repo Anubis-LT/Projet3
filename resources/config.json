@@ -40,7 +40,8 @@
   "structures": {
     "wall": {
       "caractere": "W",
-      "file_picture": "resources/pictures/brick.png"
+      "file_picture": "resources/pictures/brick.png",
+      "file_picture1": "resources/pictures/brick_gold.png"
     },
     "floor": {
       "caractere": "F",

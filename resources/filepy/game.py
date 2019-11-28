@@ -5,6 +5,7 @@
 import pygame as pg
 import sys
 import os
+import time
 
 sys.path.append("./")
 from resources.filepy.constants     import *
@@ -18,11 +19,11 @@ class Game:
     and initializes Pygame"""
     levelnumber: int
 
-    def __init__(self, level):
+    def __init__(self, level,timegame):
 
         # Choice level number of F1 to F5
         self.levelnumber = 0
-
+        self.timegame = timegame
         spath = Level(level)
 
         self.structure_map = Structure_map(spath.pathfile)
@@ -46,24 +47,27 @@ class Game:
 
         self.message = pg.font.SysFont(None, 30)
         self.win = self.message.render('YOU WIN ! You are out of the maze', True, (255, 255, 255))
-        self.win5 = self.message.render('You are a champion of THE MAZE', True, (255, 255, 255))
+        self.win5 = self.message.render('You are a champion of MAZE', True,(255, 255, 255))
         self.lost = self.message.render('YOU LOST ! The guardian captured you', True, (255, 255, 255))
 
         self.display = Display()
         self.macgyver = Macgyver(self.structure_map)
         self.playing = False
         self.clock = pg.time.Clock()
+        self.time_game=round(time.time()-self.timegame)
 
     def start(self):
         """Method which runs the game, with the map display,
         the keyboard controls and the victory conditions"""
         self.playing = True
         while self.playing:
+            self.timegame= round(time.time()-self.time_game)
             self.display.display_map(self.structure_map, self.screen)
             self.keyboard_events()
             self.items_counter()
             self.endings()
             self.clock.tick(30)
+
 
     def endings(self):
         """Method called if MG is in front of the boss with or without all the items
@@ -71,15 +75,20 @@ class Game:
         if self.structure_map.map_array[self.macgyver.y][self.macgyver.x + 1] == 'G':
 
             if self.macgyver.items_collected == 3:
-                self.rect = pg.draw.rect(self.screen, (18, 99, 18), [0, 300, 600, 50])
+                self.rect = pg.draw.rect(self.screen, (18, 99, 18), [0, 300, 600, 80])
                 if self.levelnumber < 5:
                     self.screen.blit(self.win, (115, 315))
+
                 else:
                     # End of game
                     self.screen.blit(self.win5, (115, 315))
+                    self.win5=self.message.render('Your time : ' + self.cutHour(self.timegame), True,(255, 255, 255))
+                    self.screen.blit(self.win5, (200, 350))
+
+                    self.timegame = 0
                     self.levelnumber = 0
                     pg.display.update()
-                    pg.time.delay(3000)
+                    pg.time.delay(5000)
 
             else:
                 self.rect = pg.draw.rect(self.screen, (155, 0, 0), [0, 300, 600, 50])
@@ -90,6 +99,17 @@ class Game:
 
             self.playing = False
 
+    @staticmethod
+    def cutHour(second):
+        if second>59:
+            minutes = round(second/60)
+            secondes = str(second%60)
+            if len(secondes)==1:
+                secondes ='0'+str(secondes)
+            return (str(minutes)+':'+str(secondes))
+        else:
+            return (str(second))
+
     def keyboard_events(self):
         """Method for keyboard controllers during the game,
         implemented into the game.start() method"""
@@ -97,6 +117,7 @@ class Game:
             if event.type == pg.QUIT:
                 self.levelnumber = 0
                 self.playing = False
+
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_UP:
                     self.macgyver.move_up(self.structure_map)
@@ -110,6 +131,7 @@ class Game:
                     self.levelnumber = 0
                     self.playing = False
 
+
     def items_counter(self):
         """Method to display the items counter,
         by using the Macgyver class to count the items number"""
@@ -117,5 +139,9 @@ class Game:
         self.counter_message = pg.font.SysFont(None, 25)
         self.counter = self.counter_message.render('Items : ' + str(self.macgyver.items_collected) + ' / 3', True, \
                                                    ((255, 255, 255)))
-        self.screen.blit(self.counter, (250, 15))
+        self.screen.blit(self.counter, (250, 10))
+
+        self.time_message = pg.font.SysFont(None, 40)
+        self.timeDisplay = self.time_message.render('Time : '+str(self.cutHour(self.timegame)), True,((255, 255, 255)))
+        self.screen.blit(self.timeDisplay, (430, 7))
         pg.display.update()

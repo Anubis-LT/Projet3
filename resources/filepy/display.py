@@ -18,6 +18,7 @@ class Display:
     def __init__(self):
 
         self.wall       = pg.image.load(WALL_IMG).convert_alpha()
+        self.wallgold   = pg.image.load(WALLGOLD_IMG).convert_alpha()
         self.floor      = pg.image.load(FLOOR_IMG).convert_alpha()
         self.mcgyver    = pg.image.load(MCGYVER_IMG).convert_alpha()
         self.guardian   = pg.image.load(GUARDIAN_IMG).convert_alpha()
@@ -35,7 +36,10 @@ class Display:
                 y = line_number * SIZE_SPRITES
 
                 if sprite == WALL_LETTER:
-                    screen.blit(self.wall, (x, y))
+                    if (col_number==0 or col_number==(int(NB_SPRITES)-1)) or (line_number==0 or line_number==(int(NB_SPRITES)-1)):
+                        screen.blit(self.wallgold, (x, y))
+                    else:
+                        screen.blit(self.wall, (x, y))
                 elif sprite == GUARDIAN_LETTER:
                     screen.blit(self.floor, (x, y))
                     screen.blit(self.guardian, (x, y))

@@ -22,7 +22,7 @@ class Level:
 
             pgHome.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
             filesound = str(os.getcwd()+"/resources/sound/"+SOUND_MCGYVER)
-            pgHome.mixer.music.set_volume(0.06)
+            pgHome.mixer.music.set_volume(0.90)
             pgHome.mixer.music.load(filesound)
             pgHome.mixer.music.play()
 
@@ -64,7 +64,7 @@ class Level:
 
                         # exit the game
                         pgHome.quit()
-                        return None
+
                     else:
                         if event.type == 3 and  pgHome.K_RETURN==13 and pgHome.KEYDOWN != 2:
                             nb = 1

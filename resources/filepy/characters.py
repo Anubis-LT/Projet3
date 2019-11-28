@@ -54,10 +54,11 @@ class Macgyver:
     def move_left(self, structure_map):
         # Check if the hero can move left and if he's on an item square
         if structure_map.map_array[self.y][self.x - 1] != WALL_LETTER:
-            structure_map.map_array[self.y][self.x] = FLOOR_LETTER
-            self.x -= 1
-            structure_map.map_array[self.y][self.x] = MCGYVER_LETTER
-            self.collect_items(structure_map)
+            if self.x-1>=0:
+                structure_map.map_array[self.y][self.x] = FLOOR_LETTER
+                self.x -= 1
+                structure_map.map_array[self.y][self.x] = MCGYVER_LETTER
+                self.collect_items(structure_map)
         return structure_map
 
     def collect_items(self, structure_map):
@@ -110,6 +111,7 @@ class Structure_map:
                     positions.append((x, y))
                 elif column == MCGYVER_LETTER:
                     start.append((x, y))
+
 
         self.items = sample(positions, 3)
         self.map_array[self.items[0][0]][self.items[0][1]] = NEEDLE_LETTER

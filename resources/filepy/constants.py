@@ -50,6 +50,7 @@ ETHER_LETTER    = ether["caractere"]
 
 
 WALL_IMG        = wall["file_picture"]
+WALLGOLD_IMG    = wall["file_picture1"]
 FLOOR_IMG       = floor["file_picture"]
 MCGYVER_IMG     = mcgyver["file_picture"]
 GUARDIAN_IMG    = guardian["file_picture"]
