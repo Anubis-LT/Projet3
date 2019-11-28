@@ -10,7 +10,9 @@ main.py
 """
 
 """Only import the Game to lauch the program"""
+
 import sys
+
 sys.path.append("./resources/filepy")
 from game import Game
 
@@ -31,5 +33,6 @@ def main():
 
         number_level = game.levelnumber
         timegame     = game.timegame
+
 if __name__ == "__main__":
     main()

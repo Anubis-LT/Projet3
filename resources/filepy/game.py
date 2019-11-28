@@ -24,6 +24,7 @@ class Game:
         # Choice level number of F1 to F5
         self.levelnumber = 0
         self.timegame = timegame
+
         spath = Level(level)
 
         self.structure_map = Structure_map(spath.pathfile)

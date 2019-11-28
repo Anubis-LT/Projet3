@@ -54,7 +54,6 @@ class Level:
             # Loop game Menu
             while game_loop_menu:
 
-                # Limitation de vitesse de la boucle
                 pgHome.time.Clock().tick(30)
 
                 # Captured event
