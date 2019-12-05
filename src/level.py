@@ -11,6 +11,7 @@ import sys
 
 sys.path.append("./")
 from src.constants import *
+from src.configjson import ConfigJson
 
 class Level:
     def __init__(self,level):
@@ -37,13 +38,27 @@ class Level:
             self.screen.blit(display_screen, (0, 0))
 
             # Text choose level
-            fontText        = pgHome.font.Font(None, 24)
-            text_level      = fontText.render("::: 5 LEVELS :::", 1, (255, 255, 255))
-            self.screen.blit(text_level, (250, 505))
+            fontText        = pgHome.font.Font(None, 35)
             text_level = fontText.render("START THE GAME [ F1 ] ", 1, (255, 255, 255))
-            self.screen.blit(text_level, (215, 533))
+            self.screen.blit(text_level, (170, 490))
 
-            # Display
+            fontText = pgHome.font.Font(None, 26)
+            text_level = fontText.render("5 levels to pass by picking up all the items in a minimum of time", 1, (255, 255, 255))
+            self.screen.blit(text_level, (37, 525))
+
+            # Display Winner time
+            fontText = pgHome.font.Font(None, 18)
+            parameters = ConfigJson('./resources/config.json')
+            constants = ConfigJson.file_map(parameters, "constants")
+            winner_time = constants.get("winner_time")
+            if len(WINNER_TIME) == 2:
+                sformat = " sc."
+            else:
+                sformat = ""
+
+            winner_date = constants.get("winner_date")
+            text_level = fontText.render("Best times : "+winner_date+" "+winner_time+sformat, 1, (255, 255, 255))
+            self.screen.blit(text_level, (225, 555))
             pgHome.display.flip()
 
             # Variable loop :  continue = True , Stop = False
@@ -63,6 +78,7 @@ class Level:
 
                         # exit the game
                         pgHome.quit()
+                        sys.exit(0)
 
                     else:
                         if event.type == 3 and  pgHome.K_RETURN==13 and pgHome.KEYDOWN != 2:

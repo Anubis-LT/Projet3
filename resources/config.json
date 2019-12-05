@@ -1,51 +1,53 @@
 {
-  "constants": {
-    "title"               : "Mac Gyver The Maze",
-    "filemap"             : "map_",
-    "nb_sprites"          : 15,
-    "size_sprites"        : 40,
-    "logo"                : "resources/pictures/LogoMaze.png",
-    "icon"                : "resources/pictures/Gregory.ico",
-    "sound_mcgyver"       : "MacGyver.mp3",
-    "sound_level1"        : "Level_1.mp3",
-    "sound_level2"        : "Level_2.mp3",
-    "sound_level3"        : "Level_3.mp3",
-    "sound_level4"        : "Level_4.mp3",
-    "sound_level5"        : "Level_5.mp3"
-  },
-  "characters": {
-    "mac_gyver": {
-      "caractere": "M",
-      "file_picture": "resources/pictures/mac_gyver.png"
+    "constants": {
+        "title": "Mac Gyver The Maze",
+        "filemap": "map_",
+        "nb_sprites": 15,
+        "size_sprites": 40,
+        "logo": "resources/pictures/LogoMaze.png",
+        "icon": "resources/pictures/Gregory.ico",
+        "sound_mcgyver": "MacGyver.mp3",
+        "sound_level1": "Level_1.mp3",
+        "sound_level2": "Level_2.mp3",
+        "sound_level3": "Level_3.mp3",
+        "sound_level4": "Level_4.mp3",
+        "sound_level5": "Level_5.mp3",
+        "winner_time": "1:05",
+        "winner_date": "5/12/2019"
     },
-    "guardian": {
-      "caractere": "G",
-      "file_picture": "resources/pictures/guardian.png"
+    "characters": {
+        "mac_gyver": {
+            "caractere": "M",
+            "file_picture": "resources/pictures/mac_gyver.png"
+        },
+        "guardian": {
+            "caractere": "G",
+            "file_picture": "resources/pictures/guardian.png"
+        }
+    },
+    "object": {
+        "needle": {
+            "caractere": "N",
+            "file_picture": "resources/pictures/needle.png"
+        },
+        "tube": {
+            "caractere": "T",
+            "file_picture": "resources/pictures/tube.png"
+        },
+        "ether": {
+            "caractere": "E",
+            "file_picture": "resources/pictures/ether.png"
+        }
+    },
+    "structures": {
+        "wall": {
+            "caractere": "W",
+            "file_picture": "resources/pictures/brick.png",
+            "file_picture1": "resources/pictures/brick_gold.png"
+        },
+        "floor": {
+            "caractere": "F",
+            "file_picture": "resources/pictures/floor.png"
+        }
     }
-  },
-  "object": {
-    "needle": {
-      "caractere": "N",
-      "file_picture": "resources/pictures/needle.png"
-    },
-    "tube": {
-      "caractere": "T",
-      "file_picture": "resources/pictures/tube.png"
-    },
-    "ether": {
-      "caractere": "E",
-      "file_picture": "resources/pictures/ether.png"
-    }
-  },
-  "structures": {
-    "wall": {
-      "caractere": "W",
-      "file_picture": "resources/pictures/brick.png",
-      "file_picture1": "resources/pictures/brick_gold.png"
-    },
-    "floor": {
-      "caractere": "F",
-      "file_picture": "resources/pictures/floor.png"
-    }
-  }
 }

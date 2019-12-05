@@ -11,10 +11,8 @@ main.py
 
 """Only import the Game to lauch the program"""
 
-import sys
 
 from game import Game
-
 
 def main():
     # Lauch the program, by calling the start method of the Game in folder resources/filepy
@@ -34,4 +32,5 @@ def main():
         timegame     = game.timegame
 
 if __name__ == "__main__":
+
     main()

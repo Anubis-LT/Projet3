@@ -12,6 +12,7 @@ from src.constants import *
 from src.level import Level
 from src.characters import Macgyver, Structure_map
 from src.display import Display
+from src.configjson import ConfigJson
 
 
 class Game:
@@ -19,7 +20,7 @@ class Game:
     and initializes Pygame"""
     levelnumber: int
 
-    def __init__(self, level,timegame):
+    def __init__(self, level, timegame):
 
         # Choice level number of F1 to F5
         self.levelnumber = 0
@@ -47,28 +48,26 @@ class Game:
         pg.mixer.music.play(0)
 
         self.message = pg.font.SysFont(None, 30)
-        self.win = self.message.render('YOU WIN ! You are out of the maze', True, (255, 255, 255))
-        self.win5 = self.message.render('You are a champion of MAZE', True,(255, 255, 255))
+        self.win5 = self.message.render('You are a champion of MAZE', True, (255, 255, 255))
         self.lost = self.message.render('YOU LOST ! The guardian captured you', True, (255, 255, 255))
 
         self.display = Display()
         self.macgyver = Macgyver(self.structure_map)
         self.playing = False
         self.clock = pg.time.Clock()
-        self.time_game=round(time.time()-self.timegame)
+        self.time_game = round(time.time() - self.timegame)
 
     def start(self):
         """Method which runs the game, with the map display,
         the keyboard controls and the victory conditions"""
         self.playing = True
         while self.playing:
-            self.timegame= round(time.time()-self.time_game)
+            self.timegame = round(time.time() - self.time_game)
             self.display.display_map(self.structure_map, self.screen)
             self.keyboard_events()
             self.items_counter()
             self.endings()
             self.clock.tick(30)
-
 
     def endings(self):
         """Method called if MG is in front of the boss with or without all the items
@@ -77,14 +76,27 @@ class Game:
 
             if self.macgyver.items_collected == 3:
                 self.rect = pg.draw.rect(self.screen, (18, 99, 18), [0, 300, 600, 80])
-                if self.levelnumber < 5:
-                    self.screen.blit(self.win, (115, 315))
+                if self.levelnumber == 5:
 
-                else:
-                    # End of game
-                    self.screen.blit(self.win5, (115, 315))
-                    self.win5=self.message.render('Your time : ' + self.cutHour(self.timegame), True,(255, 255, 255))
-                    self.screen.blit(self.win5, (200, 350))
+                    # End of game - Winner -
+                    self.screen.blit(self.win5, (155, 315))
+
+                    # Best Times
+                    time = self.cutHour(self.timegame)
+                    time_Valeur = str(time)
+                    time_Valeur=time_Valeur.replace(':','')
+                    winenertime_Valeur = str(WINNER_TIME)
+                    winenertime_Valeur = winenertime_Valeur.replace(':','')
+
+                    if int(time_Valeur) < int(winenertime_Valeur):
+                        parameters = ConfigJson('./resources/config.json')
+                        ConfigJson.write_winner(parameters,time)
+                        self.win5 = self.message.render('BEST TIME : ' + self.cutHour(self.timegame), True,
+                                                        (255, 255, 255))
+                    else:
+                         self.win5 = self.message.render('Your time : ' + self.cutHour(self.timegame), True, (255, 255, 255))
+
+                    self.screen.blit(self.win5, (225, 350))
 
                     self.timegame = 0
                     self.levelnumber = 0
@@ -92,22 +104,24 @@ class Game:
                     pg.time.delay(5000)
 
             else:
+                # End Game - Lost -
                 self.rect = pg.draw.rect(self.screen, (155, 0, 0), [0, 300, 600, 50])
                 self.screen.blit(self.lost, (110, 315))
                 self.levelnumber = 0
+                self.timegame = 0
                 pg.display.update()
-                pg.time.wait(1500)
+                pg.time.wait(2500)
 
             self.playing = False
 
     @staticmethod
     def cutHour(second):
-        if second>59:
-            minutes = round(second/60)
-            secondes = str(second%60)
-            if len(secondes)==1:
-                secondes ='0'+str(secondes)
-            return (str(minutes)+':'+str(secondes))
+        if second > 59:
+            minutes = round(second / 60)
+            secondes = str(second % 60)
+            if len(secondes) == 1:
+                secondes = '0' + str(secondes)
+            return (str(minutes) + ':' + str(secondes))
         else:
             return (str(second))
 
@@ -132,7 +146,6 @@ class Game:
                     self.levelnumber = 0
                     self.playing = False
 
-
     def items_counter(self):
         """Method to display the items counter,
         by using the Macgyver class to count the items number"""
@@ -143,6 +156,7 @@ class Game:
         self.screen.blit(self.counter, (250, 10))
 
         self.time_message = pg.font.SysFont(None, 40)
-        self.timeDisplay = self.time_message.render('Time : '+str(self.cutHour(self.timegame)), True,((255, 255, 255)))
+        self.timeDisplay = self.time_message.render('Time : ' + str(self.cutHour(self.timegame)), True,
+                                                    ((255, 255, 255)))
         self.screen.blit(self.timeDisplay, (430, 7))
         pg.display.update()
