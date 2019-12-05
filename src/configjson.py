@@ -10,7 +10,6 @@ import json
 import sys
 from datetime import date
 sys.path.append("./")
-from src.constants import *
 
 class ConfigJson:
     # This is to load items of file json
@@ -24,10 +23,10 @@ class ConfigJson:
 
     def write_winner(self,time):
         today = date.today()
-        WINNER_TIME = str(time)
-        WINNER_DATE = str(today.day)+"/"+str(today.month)+"/"+str(today.year)
-        self.parametersConfig["constants"]["winner_time"] = WINNER_TIME
-        self.parametersConfig["constants"]["winner_date"] = WINNER_DATE
+        winner_time = str(time)
+        winner_date = str(today.day)+"/"+str(today.month)+"/"+str(today.year)
+        self.parametersConfig["constants"]["winner_time"] = winner_time
+        self.parametersConfig["constants"]["winner_date"] = winner_date
 
         with open(self.file, "w") as config_json:
             json.dump(self.parametersConfig,config_json,indent = 4)
