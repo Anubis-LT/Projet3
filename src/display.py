@@ -1,9 +1,11 @@
+#! /usr/bin/env python3
+# coding: utf-8
+
 """
-Game: McGyver maze
-Creator: Grégory Le Terte
-
-Class: display.py
-
+Game    : McGyver maze
+file    : display.py
+Creator : Grégory Le Terte
+Info    : Display structure of the maze
 """
 
 import pygame as pg
@@ -16,15 +18,15 @@ from src.constants import *
 class Display:
     # Class only used for displaying the game, by loading images and blitting them on the screen
     def __init__(self):
-
-        self.wall       = pg.image.load(WALL_IMG).convert_alpha()
-        self.wallgold   = pg.image.load(WALLGOLD_IMG).convert_alpha()
-        self.floor      = pg.image.load(FLOOR_IMG).convert_alpha()
-        self.mcgyver    = pg.image.load(MCGYVER_IMG).convert_alpha()
-        self.guardian   = pg.image.load(GUARDIAN_IMG).convert_alpha()
-        self.tube       = pg.image.load(TUBE_IMG).convert_alpha()
-        self.ether      = pg.image.load(ETHER_IMG).convert_alpha()
-        self.needle     = pg.image.load(NEEDLE_IMG).convert_alpha()
+        #  Imge assignement
+        self.wall = pg.image.load(WALL_IMG).convert_alpha()
+        self.wallgold = pg.image.load(WALLGOLD_IMG).convert_alpha()
+        self.floor = pg.image.load(FLOOR_IMG).convert_alpha()
+        self.mcgyver = pg.image.load(MCGYVER_IMG).convert_alpha()
+        self.guardian = pg.image.load(GUARDIAN_IMG).convert_alpha()
+        self.tube = pg.image.load(TUBE_IMG).convert_alpha()
+        self.ether = pg.image.load(ETHER_IMG).convert_alpha()
+        self.needle = pg.image.load(NEEDLE_IMG).convert_alpha()
 
     def display_map(self, structure_map, screen):
         # Method to analyze the map characters and blit an image on every one of them
@@ -36,7 +38,8 @@ class Display:
                 y = line_number * SIZE_SPRITES
 
                 if sprite == WALL_LETTER:
-                    if (col_number==0 or col_number==(int(NB_SPRITES)-1)) or (line_number==0 or line_number==(int(NB_SPRITES)-1)):
+                    if (col_number == 0 or col_number == (int(NB_SPRITES) - 1)) or (
+                            line_number == 0 or line_number == (int(NB_SPRITES) - 1)):
                         screen.blit(self.wallgold, (x, y))
                     else:
                         screen.blit(self.wall, (x, y))

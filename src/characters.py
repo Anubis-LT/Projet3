@@ -1,11 +1,11 @@
 #! /usr/bin/env python3
 # coding: utf-8
-""""
-Game: McGyver maze
-Creator: Grégory Le Terte
 
-Class: characters.py
-
+"""
+Game    : McGyver maze
+file    : characters.py
+Creator : Grégory Le Terte
+Info    : This program  manage the Macgyver moves and the items picking into the maze
 """
 
 from random import sample
@@ -14,15 +14,15 @@ import sys
 sys.path.append("./")
 from src.constants import *
 
-class Macgyver:
-    """Class to manage the Macgyver moves and the items picking into the maze"""
-    def __init__(self, structure_map):
 
-        #Start position and items counter
-        self.structure_map      = structure_map
-        self.x                  = structure_map.start_x
-        self.y                  = structure_map.start_y
-        self.items_collected    = 0
+class Macgyver:
+
+    def __init__(self, structure_map):
+        # Start position and items counter
+        self.structure_map = structure_map
+        self.x = structure_map.start_x
+        self.y = structure_map.start_y
+        self.items_collected = 0
 
     def move_up(self, structure_map):
         # Check if the hero can move up and if he's on an item square
@@ -54,7 +54,7 @@ class Macgyver:
     def move_left(self, structure_map):
         # Check if the hero can move left and if he's on an item square
         if structure_map.map_array[self.y][self.x - 1] != WALL_LETTER:
-            if self.x-1>=0:
+            if self.x - 1 >= 0:
                 structure_map.map_array[self.y][self.x] = FLOOR_LETTER
                 self.x -= 1
                 structure_map.map_array[self.y][self.x] = MCGYVER_LETTER
@@ -74,19 +74,19 @@ class Macgyver:
             self.items_collected += 1
             structure_map.items[2] = (14, 2)
 
+
 class Structure_map:
-     # Class which reads the map file, extract all the characters and places items randomly
+    # Class which reads the map file, extract all the characters and places items randomly
 
     def __init__(self, filename):
-        """Lists of the entire map, the start coordonates
-        and of all the available squares to place items"""
-        self.filename       = filename
-        self.map_array      = []
-        self.items          = []
-        self.start_x        = []
-        self.start_y        = []
+        # Lists of the entire map, the start coordonates and of all the available squares to place items
+        self.filename = filename
+        self.map_array = []
+        self.items = []
+        self.start_x = []
+        self.start_y = []
 
-        """Method to create positions"""
+        # Method to create positions
         self.load_from_file()
         self.extract_positions()
 
@@ -100,10 +100,10 @@ class Structure_map:
             print("Couldn't open map file \"" + self.filename + "\"")
 
     def extract_positions(self):
-        """Method to extract a start position, every path position into the map_array
-        and using the random.sample function to select three items positions"""
-        positions   = []
-        start       = []
+        # Method to extract a start position, every path position into the map_array
+        # and using the random.sample function to select three items positions
+        positions = []
+        start = []
 
         for x, line in enumerate(self.map_array):
             for y, column in enumerate(line):
@@ -111,7 +111,6 @@ class Structure_map:
                     positions.append((x, y))
                 elif column == MCGYVER_LETTER:
                     start.append((x, y))
-
 
         self.items = sample(positions, 3)
         self.map_array[self.items[0][0]][self.items[0][1]] = NEEDLE_LETTER

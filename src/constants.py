@@ -1,12 +1,13 @@
-"""
-Game: McGyver maze
-Creator: Grégory Le Terte
-
-File: constants.py
+#! /usr/bin/env python3
+# coding: utf-8
 
 """
+Game    : McGyver maze
+file    : constants.py
+Creator : Grégory Le Terte
+Info    : Constant of game
+"""
 
-# Init parameters
 from configjson import ConfigJson
 
 
@@ -42,7 +43,6 @@ needle          = objects["needle"]
 tube            = objects["tube"]
 ether           = objects["ether"]
 
-
 WALL_LETTER     = wall["caractere"]
 FLOOR_LETTER    = floor["caractere"]
 MCGYVER_LETTER  = mcgyver["caractere"]
@@ -50,7 +50,6 @@ GUARDIAN_LETTER = guardian["caractere"]
 NEEDLE_LETTER   = needle["caractere"]
 TUBE_LETTER     = tube["caractere"]
 ETHER_LETTER    = ether["caractere"]
-
 
 WALL_IMG        = wall["file_picture"]
 WALLGOLD_IMG    = wall["file_picture1"]
@@ -60,19 +59,6 @@ GUARDIAN_IMG    = guardian["file_picture"]
 NEEDLE_IMG      = needle["file_picture"]
 TUBE_IMG        = tube["file_picture"]
 ETHER_IMG       = ether["file_picture"]
-
-
-
-
-
-#   Load images Mac Gyver and Guardian from characters config.json
-
-
-
-
-
-#   Load images Needle,tube,ether from object config.json
-
 
 
 
