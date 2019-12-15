@@ -3,17 +3,18 @@
 
 """
 Game    : McGyver maze
-file    : main.py
+File    : main.py
 Creator : Grégory Le Terte
 Info    : The game is all about McGyver struggling to find 3 items,
-          to put a guard to sleep and escape the maze. In addition a time management and 5 levels.
+          to put a guard to sleep and escape the maze. In addition a time
+          management and 5 levels.
 """
 
 from game import Game
 
 
 def main():
-    # initialization game
+    """ Game Launch """
     load_game = True
     number_level = 0
     time_game = 0
@@ -32,5 +33,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # launch the game
+    # game launch
     main()

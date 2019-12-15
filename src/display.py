@@ -3,7 +3,7 @@
 
 """
 Game    : McGyver maze
-file    : display.py
+File    : display.py
 Creator : Grégory Le Terte
 Info    : Display structure of the maze
 """
@@ -16,9 +16,13 @@ from src.constants import *
 
 
 class Display:
-    # Class only used for displaying the game, by loading images and blitting them on the screen
+    """ Class only used for displaying the game, by loading images and
+        blitting them on the screen
+    """
+
     def __init__(self):
-        #  Imge assignement
+        """  Imge assignement """
+
         self.wall = pg.image.load(WALL_IMG).convert_alpha()
         self.wallgold = pg.image.load(WALLGOLD_IMG).convert_alpha()
         self.floor = pg.image.load(FLOOR_IMG).convert_alpha()
@@ -29,17 +33,27 @@ class Display:
         self.needle = pg.image.load(NEEDLE_IMG).convert_alpha()
 
     def display_map(self, structure_map, screen):
-        # Method to analyze the map characters and blit an image on every one of them
+        """ Method to analyze the map characters and blit an image
+            on every one of them
+            Args:
+                structure_map : Structure of  caracts
+                screen : instancie pygame
+        """
         line_number = 0
+        # read line by line
         for line in structure_map.map_array:
             col_number = 0
+
+            # read caracts by caracts
             for sprite in line:
                 x = col_number * SIZE_SPRITES
                 y = line_number * SIZE_SPRITES
 
                 if sprite == WALL_LETTER:
-                    if (col_number == 0 or col_number == (int(NB_SPRITES) - 1)) or (
-                            line_number == 0 or line_number == (int(NB_SPRITES) - 1)):
+                    if (col_number == 0 or col_number == (
+                            int(NB_SPRITES) - 1)) or \
+                            (line_number == 0 or line_number == (
+                                    int(NB_SPRITES) - 1)):
                         screen.blit(self.wallgold, (x, y))
                     else:
                         screen.blit(self.wall, (x, y))
