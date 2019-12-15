@@ -1,14 +1,10 @@
 **MacGyver-Game**
 [P3] - OpenClassRoom Développeur Python - 
 
-Création d'un jeu de logique (labyrinthe) en Python 3, orienté objets
-dont le but est d'emmener le héros (MacGyver) à quitter le labyrinthe avec succès.
-Description:
+Création d'un jeu en 2D (labyrinthe) en Python 3, orienté objets
+dont le but est d'emmener le héros (MacGyver) à quitter les labyrinthes avec succès.
 
-- 5 labyrinthes 
-- Gestion du temps
-
-Pré - Requis
+Pré - Requis :
 Python 3 et la librairie Pygame est indispensable au bon fonctionnement du programme.
 
 Vous pouvez installer python3 à l'adresse suivante : https://www.python.org/downloads/
@@ -23,11 +19,11 @@ Après avoir installé python 3 et pygame, vous devez lancer le jeu depuis votre
 
 **python3 main.py**
 
-Gameplay : 
-Le personnage se déplace à l'aide des flèches directionnelles du clavier et uniquement des fléches (pour l'instant, 
-aucune autre combinaison de touche ou l'utilisation de la souris ne sont implémantés).
+###### Gameplay :
+ 
+Le personnage se déplace à l'aide des flèches directionnelles du clavier et uniquement des fléches. 
 
-Votre héros devra franchir les 5 labyrinthes en rammassan a chaque fois 3 objets pour endormir les gardiens.
+Votre héros devra franchir les 5 labyrinthes en rammassant à chaque fois 3 objets pour endormir les gardiens.
 
 Les trois objets indispensables : une aiguille, un tuyau en PVC et une bouteille d'éther.
 Si vous vous retrouvez devant votre ennemi à chaque niveau sans ses trois objets : vous avez perdu.
@@ -39,3 +35,6 @@ Touches utiles :
  - Flèches directionnelles : déplacement du personnage
  - 'F1' : Lancer le jeu
  - 'Echap' : fermeture de la fenêtre
+ 
+ 
+ Fond sonore : Jeu Pharaon (https://www.abandonware-france.org/ltf_abandon/ltf_jeu.php?id=1827)
