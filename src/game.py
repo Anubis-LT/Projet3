@@ -3,9 +3,10 @@
 
 """
 Game    : McGyver maze
-file    : game.py
+File    : game.py
 Creator : Grégory Le Terte
-Info    : Initialization of pygame, management of menu or level window displays, here we manage the game
+Info    : Initialization of pygame, management of menu or level window displays,
+           here we manage the game
 """
 
 import pygame as pg
@@ -24,7 +25,12 @@ class Game:
 
     def __init__(self, level, time_game):
 
-        # Initialization of variables
+        """ Start game Mac Gyver
+            Args:
+                level: if level=0 then we launch the game menu but if level>0
+                        launch level
+                time_game: we keep the time between the levels
+        """
         self.playing = False
         self.level_number = 0
         self.time_game = time_game
@@ -36,27 +42,35 @@ class Game:
         self.structure_map = Structure_map(spath.path_file)
         self.level_number = spath.number_level
 
-        # Pygame initialization, screen and messages creation, classes calling
+        # Init Pygame for screen
+        self.initialize_pygame()
+
+        # music game
+        self.manage_sound()
+
+
+    def initialize_pygame(self):
+        """ Pygame initialization, screen and messages creation,
+            classes calling
+        """
+
         pg.init()
         pg.font.init()
 
         # Display window
         size_screen = int(SIZE_SPRITES * NB_SPRITES)
         self.screen = pg.display.set_mode((size_screen, size_screen))
-        self.title = pg.display.set_caption(TITLE + "             LEVEL : " + str(self.level_number))
+        self.title = pg.display.set_caption(
+            TITLE + "             LEVEL : " + str(self.level_number))
         self.icon = pg.image.load(ICON).convert_alpha()
         pg.display.set_icon(self.icon)
 
-        # Manage sound
-        file_sound = str(os.getcwd() + "/resources/sound/" + f"Level_{str(self.level_number)}" + ".mp3")
-        pg.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
-        pg.mixer.music.load(file_sound)
-        pg.mixer.music.play(0)
-
         # Message for user
         self.message = pg.font.SysFont(None, 30)
-        self.win5 = self.message.render('You are a champion of MAZE', True, (255, 255, 255))
-        self.lost = self.message.render('YOU LOST ! The guardian captured you', True, (255, 255, 255))
+        self.win5 = self.message.render('You are a champion of MAZE', True,
+                                        (255, 255, 255))
+        self.lost = self.message.render('YOU LOST ! The guardian captured you',
+                                        True, (255, 255, 255))
 
         # Instancie characters
         self.macgyver = Macgyver(self.structure_map)
@@ -68,8 +82,19 @@ class Game:
         # Instancie Display screen
         self.display = Display()
 
+    def manage_sound(self):
+        """ Manage music game """
+        file_mp3 = f"Level_{str(self.level_number)}" + ".mp3"
+        file_sound = str(os.getcwd() + "/resources/sound/" + file_mp3 )
+
+        pg.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
+        pg.mixer.music.load(file_sound)
+        pg.mixer.music.play(0)
+
     def start(self):
-        # Method which runs the game, with the maps display, the keyboard controls and the victory conditions
+        """ Method which runs the game, with the maps display, the keyboard
+            controls and the victory conditions
+        """
 
         # Initialization of variables
         self.playing = True
@@ -90,59 +115,69 @@ class Game:
             self.clock.tick(30)
 
     def endings(self):
-        # Method called if MacGyver is in front of the guard with or without all objects
-        # displaying a gain or loss and game end message.
+        """ Method called if MacGyver is in front of the guard with or
+            without all objects
+        """
 
+        # displaying a gain or loss and game end message.
         if self.structure_map.map_array[self.macgyver.y][self.macgyver.x + 1] == 'G':
 
             if self.macgyver.items_collected == 3:
-
                 # Case if we recovered all 3 objects
                 self.rect = pg.draw.rect(self.screen, (18, 99, 18), [0, 300, 600, 80])
 
                 # If so, at what level are we?
                 if self.level_number == 5:
-
-                    # End of game - Winner -
-
-                    # Position text
-                    self.screen.blit(self.win5, (155, 315))
-
-                    # We calculate if the player was the fastest to do the 5 levels
-                    time = self.cutHour(self.time_game)
-                    time_valeur = str(time)
-                    time_valeur = time_valeur.replace(':','')
-                    winenertime_valeur = str(WINNER_TIME)
-                    winenertime_valeur = winenertime_valeur.replace(':','')
-
-                    if int(time_valeur) < int(winenertime_valeur):
-
-                        # The player was the fastest, we display it and record his score
-                        parameters = ConfigJson('./resources/config.json')
-                        ConfigJson.write_winner(parameters,time)
-                        self.win5 = self.message.render('BEST TIME : ' + self.cutHour(self.time_game), True, (255, 255, 255))
-                    else:
-                         self.win5 = self.message.render('Your time : ' + self.cutHour(self.time_game), True, (255, 255, 255))
-
-                    self.screen.blit(self.win5, (225, 350))
-
-                    # Initialization of variables
-                    self.time_game = 0
-                    self.level_number = 0
-                    pg.display.update()
-                    pg.time.delay(5000)
-
+                    # End of game - Winner, display Text and save file
+                    self.display_message_winner()
             else:
-                # End Game, the player has lost, the message is displayed and the time and level are initialized
-                self.rect = pg.draw.rect(self.screen, (155, 0, 0), [0, 300, 600, 50])
-                self.screen.blit(self.lost, (110, 315))
-                self.level_number = 0
-                self.time_game = 0
-                pg.display.update()
-                pg.time.wait(2500)
+                # End of game - Lost, display Text
+                self.display_message_lost()
 
             # stop loop game : start()
             self.playing = False
+
+    def display_message_winner(self):
+        """ We calculate if the player was the fastest to do the 5 levels """
+        self.screen.blit(self.win5, (155, 315))
+
+        time = self.cutHour(self.time_game)
+        time_valeur = str(time)
+        time_valeur = time_valeur.replace(':', '')
+        winenertime_valeur = str(WINNER_TIME)
+        winenertime_valeur = winenertime_valeur.replace(':', '')
+
+        if int(time_valeur) < int(winenertime_valeur):
+            # The player was the fastest, we display it and record his score
+            parameters = ConfigJson('./resources/config.json')
+            ConfigJson.write_winner(parameters, time)
+            text_win5 = "BEST TIME : " + self.cutHour(self.time_game)
+            self.win5 = self.message.render(text_win5, True, (255, 255, 255))
+        else:
+            text_win5 = "Your time : " + self.cutHour(self.time_game)
+            self.win5 = self.message.render(text_win5, True, (255, 255, 255))
+
+        self.screen.blit(self.win5, (225, 350))
+
+        # Initialization of variables
+        self.time_game = 0
+        self.level_number = 0
+        pg.display.update()
+        pg.time.delay(5000)
+
+    def display_message_lost(self):
+        """ End Game, the player has lost, the message is displayed and
+            the time and level are initialized
+        """
+
+        self.rect = pg.draw.rect(self.screen, (155, 0, 0), [0, 300, 600, 50])
+        self.screen.blit(self.lost, (110, 315))
+
+        # Initialization of variables
+        self.level_number = 0
+        self.time_game = 0
+        pg.display.update()
+        pg.time.wait(2500)
 
     @staticmethod
     def cutHour(second):
@@ -158,7 +193,8 @@ class Game:
             return str(second)
 
     def keyboard_events(self):
-        # Method for keyboard controllers during the game, implemented into the game.start() method
+        """ Method for keyboard controllers during the game, implemented"""
+        # into the game.start() method
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 # We leave the game
@@ -179,15 +215,19 @@ class Game:
                     self.playing = False
 
     def items_counter(self):
-        # Method to display the items counter, by using the Macgyver class to count the items number
-
+        """ Method to display the items counter, by using the Macgyver
+            class to count the items number
+        """
+        #Text items
         self.counter_message = pg.font.SysFont(None, 25)
-        self.counter = self.counter_message.render('Items : ' + str(self.macgyver.items_collected) + ' / 3', True, \
-                                                   ((255, 255, 255)))
+        text_items = "Items : " + str(self.macgyver.items_collected) + " / 3"
+        self.counter = self.counter_message.render(text_items, True,((255, 255, 255)))
         self.screen.blit(self.counter, (250, 10))
 
+        # Text Time
         self.time_message = pg.font.SysFont(None, 40)
-        self.timeDisplay = self.time_message.render('Time : ' + str(self.cutHour(self.time_game)), True,
-                                                    ((255, 255, 255)))
+        text_time = "Time : " + str(self.cutHour(self.time_game))
+        self.timeDisplay = self.time_message.render(text_time, True,((255, 255, 255)))
+
         self.screen.blit(self.timeDisplay, (430, 7))
         pg.display.update()

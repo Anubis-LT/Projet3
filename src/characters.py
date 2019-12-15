@@ -3,9 +3,10 @@
 
 """
 Game    : McGyver maze
-file    : characters.py
+File    : characters.py
 Creator : Grégory Le Terte
-Info    : This program  manage the Macgyver moves and the items picking into the maze
+Info    : This program  manage the Macgyver moves and the items picking
+          into the maze
 """
 
 from random import sample
@@ -14,10 +15,66 @@ import sys
 sys.path.append("./")
 from src.constants import *
 
+class Structure_map:
+    """ Class which reads the map file, extract all the characters and
+        places items randomly"""
+
+    def __init__(self, filename):
+        """ Lists of the entire map, the start coordonates and of all
+            the available squares to place items
+            Args:
+                filename : path file map txt
+        """
+
+        self.filename = filename
+        self.map_array = []
+        self.items = []
+        self.start_x = []
+        self.start_y = []
+
+        # Method to create positions
+        self.load_from_file()
+        self.extract_positions()
+
+    def load_from_file(self):
+        """ Loading map to make an array with all the file characters"""
+        try:
+            with open(self.filename, "r") as map_file:
+                for line in map_file:
+                    self.map_array.append(list(line.strip()))
+        except FileNotFoundError:
+            print("Couldn't open map file \"" + self.filename + "\"")
+
+    def extract_positions(self):
+        """ Method to extract a start position, every path position into
+            the map_array and using the random.sample function to select
+             three items positions
+        """
+        positions = []
+        start = []
+
+        # Append List position of items and position Mac Gyver
+        for x, line in enumerate(self.map_array):
+            for y, column in enumerate(line):
+                if column == FLOOR_LETTER:
+                    positions.append((x, y))
+                elif column == MCGYVER_LETTER:
+                    start.append((x, y))
+
+        self.items = sample(positions, 3)
+        self.map_array[self.items[0][0]][self.items[0][1]] = NEEDLE_LETTER
+        self.map_array[self.items[1][0]][self.items[1][1]] = TUBE_LETTER
+        self.map_array[self.items[2][0]][self.items[2][1]] = ETHER_LETTER
+        self.start_y = start[0][0]
+        self.start_x = start[0][1]
 
 class Macgyver:
 
     def __init__(self, structure_map):
+        """ Check if the hero can move
+                Args:
+                structure_map : character list contain the game structure
+        """
         # Start position and items counter
         self.structure_map = structure_map
         self.x = structure_map.start_x
@@ -62,7 +119,8 @@ class Macgyver:
         return structure_map
 
     def collect_items(self, structure_map):
-        # Check if the hero position is also an item position, and increments the backpack
+        # Check if the hero position is also an item position, and increments
+        # the backpack
         # The item position is moved away to avoid repetitions
         if (self.y, self.x) == structure_map.items[0]:
             self.items_collected += 1
@@ -73,48 +131,3 @@ class Macgyver:
         elif (self.y, self.x) == structure_map.items[2]:
             self.items_collected += 1
             structure_map.items[2] = (14, 2)
-
-
-class Structure_map:
-    # Class which reads the map file, extract all the characters and places items randomly
-
-    def __init__(self, filename):
-        # Lists of the entire map, the start coordonates and of all the available squares to place items
-        self.filename = filename
-        self.map_array = []
-        self.items = []
-        self.start_x = []
-        self.start_y = []
-
-        # Method to create positions
-        self.load_from_file()
-        self.extract_positions()
-
-    def load_from_file(self):
-        # Loading map to make an array with all the file characters
-        try:
-            with open(self.filename, "r") as map_file:
-                for line in map_file:
-                    self.map_array.append(list(line.strip()))
-        except FileNotFoundError:
-            print("Couldn't open map file \"" + self.filename + "\"")
-
-    def extract_positions(self):
-        # Method to extract a start position, every path position into the map_array
-        # and using the random.sample function to select three items positions
-        positions = []
-        start = []
-
-        for x, line in enumerate(self.map_array):
-            for y, column in enumerate(line):
-                if column == FLOOR_LETTER:
-                    positions.append((x, y))
-                elif column == MCGYVER_LETTER:
-                    start.append((x, y))
-
-        self.items = sample(positions, 3)
-        self.map_array[self.items[0][0]][self.items[0][1]] = NEEDLE_LETTER
-        self.map_array[self.items[1][0]][self.items[1][1]] = TUBE_LETTER
-        self.map_array[self.items[2][0]][self.items[2][1]] = ETHER_LETTER
-        self.start_y = start[0][0]
-        self.start_x = start[0][1]
