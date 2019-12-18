@@ -80,6 +80,7 @@ class Macgyver:
         self.x = structure_map.start_x
         self.y = structure_map.start_y
         self.items_collected = 0
+        self.items_name_collected = ""
 
     def move_up(self, structure_map):
         # Check if the hero can move up and if he's on an item square
@@ -122,12 +123,20 @@ class Macgyver:
         # Check if the hero position is also an item position, and increments
         # the backpack
         # The item position is moved away to avoid repetitions
+
         if (self.y, self.x) == structure_map.items[0]:
+            # NEEDLE
             self.items_collected += 1
+            self.items_name_collected += " NEEDLE "
             structure_map.items[0] = (14, 0)
+
         elif (self.y, self.x) == structure_map.items[1]:
+            # TUBE
             self.items_collected += 1
+            self.items_name_collected += " TUBE "
             structure_map.items[1] = (14, 1)
         elif (self.y, self.x) == structure_map.items[2]:
+            # ETHER
             self.items_collected += 1
+            self.items_name_collected += " ETHER "
             structure_map.items[2] = (14, 2)

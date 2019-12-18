@@ -222,7 +222,14 @@ class Game:
         self.counter_message = pg.font.SysFont(None, 25)
         text_items = "Items : " + str(self.macgyver.items_collected) + " / 3"
         self.counter = self.counter_message.render(text_items, True,((255, 255, 255)))
-        self.screen.blit(self.counter, (250, 10))
+        self.screen.blit(self.counter, (45, 570))
+
+
+        self.items_message = pg.font.SysFont(None, 25)
+        text_items = str("["+self.macgyver.items_name_collected+"]")
+        self.items = self.items_message.render(text_items, True,
+                                                   ((255, 255, 255)))
+        self.screen.blit(self.items, (150, 570))
 
         # Text Time
         self.time_message = pg.font.SysFont(None, 40)
